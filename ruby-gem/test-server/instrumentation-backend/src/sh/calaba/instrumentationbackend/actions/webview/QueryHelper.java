@@ -20,7 +20,7 @@ public class QueryHelper {
 		String script = readJavascriptFromAsset(scriptPath);
 		
 		for (String arg : args) {
-			script = script.replaceFirst("%@", arg);
+			script = script.replaceFirst("%@", CalabashChromeClient.filterQuery(arg));
 		}
 
 		final String myScript = script;
