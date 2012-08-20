@@ -22,9 +22,9 @@ def calabash_build(app)
         "-Dtested.project.apk=\"#{app}\"",
         "-Dandroid.api.level=#{api_level}",
         "-Dkey.store=\"#{File.expand_path keystore["keystore_location"]}\"",
-        "-Dkey.store.password=#{keystore["keystore_password"]}",
-        "-Dkey.alias=#{keystore["keystore_alias"]}",
-        "-Dkey.alias.password=#{keystore["keystore_alias_password"]}",
+        "-Dkey.store.password=\"#{keystore["keystore_password"]}\"",
+        "-Dkey.alias=\"#{keystore["keystore_alias"]}\"",
+        "-Dkey.alias.password=\"#{keystore["keystore_alias_password"]}\"",
       ]
       STDOUT.sync = true
       IO.popen(args.join(" ")) do |io|
