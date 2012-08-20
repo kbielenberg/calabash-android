@@ -10,6 +10,7 @@ import android.widget.TextView;
 import sh.calaba.instrumentationbackend.Result;
 import sh.calaba.instrumentationbackend.TestHelpers;
 import sh.calaba.instrumentationbackend.actions.Action;
+import java.lang.reflect.Method;
 
 
 /**
@@ -106,7 +107,12 @@ public class AssertViewProperty extends GetViewProperty implements Action {
 			actual = ((DrawableContainer)actual).getCurrent();
 		}
 		if( (expected instanceof BitmapDrawable) && (actual instanceof BitmapDrawable) ) {
-			return ((BitmapDrawable)expected).getBitmap().sameAs( ((BitmapDrawable)actual).getBitmap() );
+			try {
+				Method methodGetConfiguration = ((BitmapDrawable)expected).getBitmap().getClass().getMethod("sameAs");
+				return (Boolean)methodGetConfiguration.invoke(((BitmapDrawable)expected).getBitmap(), ((BitmapDrawable)actual).getBitmap());
+			} catch (Exception $e) {
+				return false;
+			}
 		}
 		return false;
 	}

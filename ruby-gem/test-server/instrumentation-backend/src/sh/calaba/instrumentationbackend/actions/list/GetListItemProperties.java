@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
+import java.lang.reflect.Method;
+
 
 /**
  * args: 
@@ -102,8 +104,14 @@ public class GetListItemProperties implements Action {
 
 		json.append(", \"color\":").append( view.getCurrentTextColor() );
 		Drawable background = view.getBackground();
+
 		if( background instanceof ColorDrawable ) {
-			json.append(", \"background\":").append( ((ColorDrawable)background).getColor() );
+			try {
+				Method methodGetConfiguration = background.getClass().getMethod("getColor");
+				json.append(", \"background\":").append((ColorDrawable)methodGetConfiguration.invoke(background));
+			} catch(Exception e) {
+
+			}
 		}
 
 		StringBuilder compoundStr = new StringBuilder();
