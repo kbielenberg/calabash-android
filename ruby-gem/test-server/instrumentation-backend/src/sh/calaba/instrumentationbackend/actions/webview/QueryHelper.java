@@ -24,7 +24,7 @@ public class QueryHelper {
 		}
 
 		final String myScript = script;
-    	List<CalabashChromeClient> webViews = CalabashChromeClient.findAndPrepareWebViews();
+    	List<CalabashChromeClient> webViews = CalabashChromeClient.filterWebViewsById(args[0]);
 
     	for (CalabashChromeClient ccc : webViews) {
     		final WebView webView = ccc.getWebView();

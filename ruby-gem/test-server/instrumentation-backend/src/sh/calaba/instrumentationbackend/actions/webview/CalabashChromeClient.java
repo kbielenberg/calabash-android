@@ -44,6 +44,33 @@ public class CalabashChromeClient extends WebChromeClient {
 		return -1;
 	}
 
+	public static String filterQuery(String query)
+	{
+		Integer id = getWebViewId(query);
+		if (id >= 0) {
+			return query.replace("webView:" + id + " ", "");
+		}
+		return query;
+	}
+
+	public static List<CalabashChromeClient> filterWebViewsById(String query) {
+
+		List<CalabashChromeClient> views = findAndPrepareWebViews();
+		Integer id = getWebViewId(query);
+		if (id >= 0) {
+			for (CalabashChromeClient view : views) {
+				if (id == view.getWebView().getId()) {
+					List<CalabashChromeClient> currentViews = new ArrayList<CalabashChromeClient>();
+					if (view.getWebView().getVisibility() == View.VISIBLE) {
+						currentViews.add(view);
+					}
+					return currentViews;
+				}
+			}
+		}
+		return views;
+	}
+
 	@Override
 	public boolean onJsPrompt(WebView view, String url, String message,	String defaultValue, JsPromptResult r) {
 		if (message != null && message.startsWith("calabash:")) {
