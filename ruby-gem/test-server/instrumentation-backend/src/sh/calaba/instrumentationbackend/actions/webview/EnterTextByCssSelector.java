@@ -12,10 +12,10 @@ public class EnterTextByCssSelector implements Action {
 
     @Override
     public Result execute(String... args) {
-    	final String cssSelector = args[0];
+    	final String cssSelector = CalabashChromeClient.filterQuery(args[0]);
     	final String value = args[1];
-    	
-    	for (CalabashChromeClient ccc : CalabashChromeClient.findAndPrepareWebViews()) {
+
+    	for (CalabashChromeClient ccc : CalabashChromeClient.CalabashChromeClient.filterWebViewsById(args[0])) {
     		final WebView webView = ccc.getWebView();
 			
     		
